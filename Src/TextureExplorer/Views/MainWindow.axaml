@@ -1,0 +1,97 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:TextureExplorer.Views"
+		xmlns:vm="using:TextureExplorer.ViewModels"
+		xmlns:models="clr-namespace:TextureExplorer.Models"
+		xmlns:convs="clr-namespace:TextureExplorer.Services.Converters"
+		x:Class="TextureExplorer.Views.MainWindow"
+        mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="600"
+        Height="630" Width="800"
+        FontSize="14"
+        Title="Texture Explorer">
+
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
+
+	<Window.Resources>
+		<convs:PathToBitmapConverter x:Key="bitmapConv"/>
+		<convs:ListToStringConverter x:Key="lstToStrConv"/>
+	</Window.Resources>
+
+	<Grid RowDefinitions="25,*,25">
+		<Menu Grid.Row="0" >
+			<MenuItem Header="_File">
+				<MenuItem Header="_Set Texture Directory..."
+						  Command="{Binding SetTextureDir}"
+						  ToolTip.Tip="{Binding fileMan.TextureDir}"/>
+				<Separator/>
+				<MenuItem Header="_Exit"/>
+			</MenuItem>
+			<MenuItem Header="_Edit">
+				<MenuItem Header="_Save"
+						  IsEnabled="{Binding IsSaveEnabled}"
+						  Command="{Binding Save}"/>
+				<MenuItem Header="_Update"
+						  Command="{Binding Update}"/>
+			</MenuItem>
+		</Menu>
+
+		<Grid ColumnDefinitions="100,*"
+			  RowDefinitions="*,auto,auto,auto"
+			  Grid.Row="1">
+
+			<ListBox ItemsSource="{Binding Categories}"
+					 SelectedItem="{Binding SelectedCategory}"
+					 SelectionMode="Toggle"
+					 Grid.Row="0"/>
+			<ScrollViewer Grid.Column="1">
+				<ItemsControl ItemsSource="{Binding Results}">
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<UniformGrid Columns="3"/>
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
+
+					<ItemsControl.ItemTemplate>
+						<DataTemplate DataType="{x:Type models:Texture}">
+							<StackPanel Orientation="Vertical" Margin="5" Background="AliceBlue" Height="210">
+								<TextBlock Text="{Binding Name}"
+										   HorizontalAlignment="Center"/>
+								<Image Source="{Binding Dir, Converter={StaticResource bitmapConv}}"
+									   Width="150"
+									   Margin="3"/>
+								<StackPanel Orientation="Horizontal" Spacing="10">
+									<Button Content="Open Dir"
+											ToolTip.Tip="{Binding Dir}"/>
+									<TextBlock Text="Tags"
+											   ToolTip.Tip="{Binding Tags, Converter={StaticResource lstToStrConv}}"/>
+								</StackPanel>
+
+
+							</StackPanel>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</ScrollViewer>
+		</Grid>
+
+
+		<Grid Background="LightGray" ColumnDefinitions="*,auto" Grid.Row="2">
+			<TextBlock Text="{Binding Message}"
+					   MinHeight="25"
+					   Grid.Column="0"/>
+			<StackPanel Orientation="Horizontal"
+						HorizontalAlignment="Center"
+						Grid.Column="1">
+				<TextBlock Text="{Binding Results.Count}"
+						   ToolTip.Tip="Selected"/>
+				<TextBlock Text="/"/>
+				<TextBlock Text="{Binding AllTextures.Count}"
+						   ToolTip.Tip="Total"/>
+			</StackPanel>
+		</Grid>
+	</Grid>
+</Window>
