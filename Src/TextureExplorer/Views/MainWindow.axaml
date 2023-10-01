@@ -9,6 +9,7 @@
 		x:Class="TextureExplorer.Views.MainWindow"
         mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="600"
         Height="630" Width="800"
+		Icon="/Assets/icon.png"
         FontSize="14"
         Title="Texture Explorer">
 
