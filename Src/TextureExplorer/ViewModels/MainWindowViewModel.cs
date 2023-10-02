@@ -3,9 +3,11 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENCE or http://www.opensource.org/licenses/mit-license.php.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using TextureExplorer.Models;
 using TextureExplorer.Services;
 
@@ -21,6 +23,9 @@ namespace TextureExplorer.ViewModels
             AllTextures = new(fileMan.ReadDatabase());
             SetCategories();
             Message = "Loaded";
+
+            Version ver = Assembly.GetExecutingAssembly().GetName().Version ?? new Version();
+            Title = $"Texture Explorer - {ver.ToString(4)}";
         }
 
 
@@ -30,6 +35,8 @@ namespace TextureExplorer.ViewModels
         public ObservableCollection<Texture> AllTextures { get; private set; }
         public ObservableCollection<Texture> Results { get; } = new();
         public ObservableCollection<string> Categories { get; } = new();
+
+        public string Title { get; }
 
         private string? _selCat;
         public string? SelectedCategory
@@ -98,8 +105,6 @@ namespace TextureExplorer.ViewModels
 
         public async void Update()
         {
-            SelectedCategory = null;
-
             IEnumerable<Texture> updateList = fileMan.ReadTextureFiles();
             List<Texture> final = new();
             foreach (Texture item in updateList)
@@ -130,6 +135,7 @@ namespace TextureExplorer.ViewModels
                 await winMan.ShowDialog(vm);
                 if (vm.Processed.Count != 0)
                 {
+                    SelectedCategory = null;
                     foreach (var item in vm.Processed)
                     {
                         AllTextures.Add(item);
@@ -137,8 +143,8 @@ namespace TextureExplorer.ViewModels
 
                     Message = $"Added {vm.Processed.Count} new items.";
                     IsSaveEnabled = true;
+                    SetCategories();
                 }
-                SetCategories();
             }
         }
     }
