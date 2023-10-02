@@ -2,14 +2,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:convs="clr-namespace:TextureExplorer.Services.Converters"
              mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
              x:Class="TextureExplorer.Views.UpdateView">
 
-	<UserControl.Resources>
-		<convs:PathToBitmapConverter x:Key="bitmapConv"/>
-	</UserControl.Resources>
-	
 	<Grid ColumnDefinitions="200,*">
 		<Grid RowDefinitions="*,auto" Grid.Column="0">
 			<ListBox ItemsSource="{Binding AllTextures}"
@@ -32,43 +27,14 @@
 			</Grid>
 		</Grid>
 
-		<Grid ColumnDefinitions="auto,*"
-			  RowDefinitions="200,auto,auto,auto,auto,100,auto"
-			  Grid.Column="1">
+		<Grid RowDefinitions="auto,100" Grid.Column="1">
 			
-			<Image Source="{Binding SelectedTexture.Dir, Converter={StaticResource bitmapConv}}"
-				   Grid.Column="1" Grid.Row="0"/>
-			
-			<TextBlock Text="Dir:"
-					   Grid.Column="0" Grid.Row="1"/>
-			<TextBlock Text="{Binding SelectedTexture.Dir}"
-					   Grid.Column="1" Grid.Row="1"/>
-
-			<TextBlock Text="Name:"
-					   Grid.Column="0" Grid.Row="2"/>
-			<TextBox Text="{Binding SelectedTexture.Name}"
-					 Grid.Column="1" Grid.Row="2"/>
-
-			<TextBlock Text="Category:"
-					   Grid.Column="0" Grid.Row="3"/>
-			<TextBox Text="{Binding SelectedTexture.Category}"
-					 Grid.Column="1" Grid.Row="3"/>
-
-			<TextBlock Text="Tag:"
-					   Grid.Column="0" Grid.Row="4"/>
-			<StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4">
-				<TextBox Text="{Binding TagToAdd}"/>
-				<Button Content="+" Width="30" Command="{Binding AddTag}"
-						IsDefault="True"/>
-			</StackPanel>
-			
-			<ListBox ItemsSource="{Binding SelectedTexture.Tags}"
-					 Grid.Column="1" Grid.Row="5"/>
+			<ContentControl Content="{Binding EditVm}"
+							Grid.Row="0"/>
 			
 			<Button Content="Add" Command="{Binding Add}"
-					HorizontalContentAlignment="Center"
 					Margin="5" Width="70"
-				    Grid.Column="1" Grid.Row="6"/>
+				    Grid.Row="1"/>
 		</Grid>
 	</Grid>
 </UserControl>

@@ -11,14 +11,13 @@
         Height="630" Width="800"
 		Icon="/Assets/icon.png"
         FontSize="14"
-        Title="Texture Explorer">
+        Title="{Binding Title}">
 
 	<Design.DataContext>
 		<vm:MainWindowViewModel/>
 	</Design.DataContext>
 
 	<Window.Resources>
-		<convs:PathToBitmapConverter x:Key="bitmapConv"/>
 		<convs:ListToStringConverter x:Key="lstToStrConv"/>
 	</Window.Resources>
 
@@ -67,10 +66,11 @@
 								<StackPanel Orientation="Horizontal" Spacing="10">
 									<Button Content="Open Dir"
 											ToolTip.Tip="{Binding Dir}"/>
+									<Button Content="Edit"
+											ToolTip.Tip="{Binding Edit}"/>
 									<TextBlock Text="Tags"
 											   ToolTip.Tip="{Binding Tags, Converter={StaticResource lstToStrConv}}"/>
 								</StackPanel>
-
 
 							</StackPanel>
 						</DataTemplate>
