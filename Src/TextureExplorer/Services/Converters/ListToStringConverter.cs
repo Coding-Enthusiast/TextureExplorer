@@ -7,6 +7,7 @@ using Avalonia.Data.Converters;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace TextureExplorer.Services.Converters
@@ -17,11 +18,18 @@ namespace TextureExplorer.Services.Converters
         {
             if (value is IEnumerable<string> lst && targetType.IsAssignableFrom(typeof(string)))
             {
-                StringBuilder sb = new();
+                if (!lst.Any())
+                {
+                    return string.Empty;
+                }
+
+                // Tags are 5 chars on average, 3-6 tags is 15-30 char total. Default capacity of SB is 16 (too low).
+                StringBuilder sb = new(32);
                 foreach (var item in lst)
                 {
                     sb.AppendLine(item);
                 }
+                sb.Length -= Environment.NewLine.Length;
                 return sb.ToString();
             }
 
