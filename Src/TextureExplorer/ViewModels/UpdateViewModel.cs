@@ -24,24 +24,20 @@ namespace TextureExplorer.ViewModels
         public Texture? SelectedTexture
         {
             get => _selTex;
-            set => SetProperty(ref _selTex, value);
-        }
-
-        private string _tag = string.Empty;
-        public string TagToAdd
-        {
-            get => _tag;
-            set => SetProperty(ref _tag, value);
-        }
-
-
-        public void AddTag()
-        {
-            if (!string.IsNullOrEmpty(TagToAdd) && SelectedTexture is not null)
+            set
             {
-                SelectedTexture.Tags.Add(TagToAdd);
-                TagToAdd = string.Empty;
+                if (SetProperty(ref _selTex, value))
+                {
+                    EditVm = new EditViewModel(value);
+                }
             }
+        }
+
+        private EditViewModel _evm = new(null);
+        public EditViewModel EditVm
+        {
+            get => _evm;
+            set => SetProperty(ref _evm, value);
         }
 
 

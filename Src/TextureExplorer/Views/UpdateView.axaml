@@ -8,8 +8,8 @@
 	<Grid ColumnDefinitions="200,*">
 		<Grid RowDefinitions="*,auto" Grid.Column="0">
 			<ListBox ItemsSource="{Binding AllTextures}"
-					 SelectedItem="{Binding SelectedTexture}"
-					 Grid.Column="0">
+                     SelectedItem="{Binding SelectedTexture}"
+                     Grid.Column="0">
 				<ListBox.ItemTemplate>
 					<DataTemplate>
 						<TextBlock Text="{Binding Name}"/>
@@ -18,23 +18,24 @@
 			</ListBox>
 
 			<Grid ColumnDefinitions="auto,*" RowDefinitions="auto,auto" Grid.Row="1">
-				<TextBlock Text="Total: " Grid.Column="0" Grid.Row="0"/>
+				<TextBlock Text="Total: "
+                           Grid.Column="0" Grid.Row="0"/>
 				<TextBlock Text="{Binding AllTextures.Count}"
-						   Grid.Column="1" Grid.Row="0"/>
-				<TextBlock Text="Updated: " Grid.Column="0" Grid.Row="1"/>
+                           Grid.Column="1" Grid.Row="0"/>
+				<TextBlock Text="Updated: "
+                           Grid.Column="0" Grid.Row="1"/>
 				<TextBlock Text="{Binding Processed.Count}"
-						   Grid.Column="1" Grid.Row="1"/>
+                           Grid.Column="1" Grid.Row="1"/>
 			</Grid>
 		</Grid>
 
 		<Grid RowDefinitions="auto,100" Grid.Column="1">
-			
 			<ContentControl Content="{Binding EditVm}"
-							Grid.Row="0"/>
-			
+                            Grid.Row="0"/>
+
 			<Button Content="Add" Command="{Binding Add}"
-					Margin="5" Width="70"
-				    Grid.Row="1"/>
+                    Margin="5" Width="70"
+                    Grid.Row="1"/>
 		</Grid>
 	</Grid>
 </UserControl>

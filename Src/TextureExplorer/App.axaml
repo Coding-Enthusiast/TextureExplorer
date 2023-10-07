@@ -19,6 +19,9 @@
 		<DataTemplate DataType="{x:Type vm:UpdateViewModel}">
 			<views:UpdateView/>
 		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:EditViewModel}">
+			<views:EditView/>
+		</DataTemplate>
 	</Application.DataTemplates>
 
 	<Application.Styles>

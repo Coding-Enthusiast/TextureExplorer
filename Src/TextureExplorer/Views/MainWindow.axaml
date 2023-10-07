@@ -65,9 +65,10 @@
 									   Margin="3"/>
 								<StackPanel Orientation="Horizontal" Spacing="10">
 									<Button Content="Open Dir"
+											Command="{Binding OpenDir}"
 											ToolTip.Tip="{Binding Dir}"/>
 									<Button Content="Edit"
-											ToolTip.Tip="{Binding Edit}"/>
+											Command="{Binding Edit}"/>
 									<TextBlock Text="Tags"
 											   ToolTip.Tip="{Binding Tags, Converter={StaticResource lstToStrConv}}"/>
 								</StackPanel>
